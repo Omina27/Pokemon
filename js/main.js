@@ -150,25 +150,26 @@ var  COUNT = document.getElementById('liked')
 var memory = new Array()
 
 
-for (var nameGame of games) {
+for (var i of games) {
     var BOX = document.createElement('div')
     BOX.classList.add ('card')
     var TITTLE = document.createElement('h3')
     TITTLE.classList.add('card__title')
-    TITTLE.textContent = nameGame.Pokonames.name
+    TITTLE.textContent = i.Pokonames.name
 
     var CATEGORY = document.createElement('p')
     CATEGORY.classList.add('card__text')
-    CATEGORY.textContent = nameGame.Pokonames.types
+    CATEGORY.textContent = i.Pokonames.types
 
     var IMG = document.createElement('img')
     IMG.classList.add('card__img')
-    IMG.src = nameGame.Pokonames.smallThumbnail
+    IMG.src = i.Pokonames.smallThumbnail
 
     var BUTTON = document.createElement('button')
     BUTTON.setAttribute('id','btn')
     BUTTON.classList.add('card__button')
     BUTTON.textContent = "Like"
+
 
     BOX.appendChild(IMG)
     BOX.appendChild(TITTLE)
@@ -179,16 +180,18 @@ for (var nameGame of games) {
     
 }
 
-cardWrapper.addEventListener('click', function (event) {
-    if (event.originalTarget.textContent == 'Dislike') {
-        memory.pop();
-        event.originalTarget.textContent = "Like"
+cardWrapper.addEventListener('click', e =>  {
+   console.log(e.target.textContent);
+    if (e.target.textContent == 'Like') {
+        memory.push(e.target.parentElement.dataset['name'])
+        e.target.textContent = "Dislike"
     } else {
-        memory.push(event.originalTarget.parentElement.dataset['name'])
-        event.originalTarget.textContent = 'Dislike'
+        memory.pop();
+        e.target.textContent = 'Like'
     }
-    
+
     COUNT.textContent = memory.length
-    console.log(memory);
+    
+   
 })
 
